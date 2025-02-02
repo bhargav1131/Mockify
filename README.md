@@ -9,9 +9,10 @@ Mockify is an AI-powered mock interview platform that helps job seekers practice
 - 💾 **Secure & Private** – No video recordings; your data remains safe.  
 
 ## 🛠️ Tech Stack  
-- **Frontend:** Next.js, React, Tailwind CSS  
+- **Frontend:** Next.js, React, Tailwind CSS, ShadCn UI 
 - **Backend:** Drizzle ORM, Neon Database  
 - **AI Processing:** Gemini API  
+- **Authentication:** Clerk
 
 ## 📸 Screenshots  
 Coming soon...  
