@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Webcam from "react-webcam";
 import { Video } from 'lucide-react';
 import { Lightbulb } from 'lucide-react';
@@ -57,8 +58,11 @@ function Interview({params}) {
             }
             </div>
         </div>
+
         <div className='flex justify-end items-end'>
+            <Link href={'/dashboard/interview/'+params.interviewId+'/start'}>
               <Button>Start Interview</Button>
+            </Link>
         </div>
     </div>
   )
