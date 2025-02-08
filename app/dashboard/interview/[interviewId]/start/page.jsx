@@ -1,6 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react'
 import QuestionsSection from "./_components/QuestionsSection"
+import RecordAnsSection from "./_components/RecordAnsSection"
 import {db} from "@/utils/db"
 import {MockInterview} from "@/utils/schema"
 import {eq} from 'drizzle-orm'
@@ -26,12 +27,13 @@ function StartInterview({params}) {
 
   return (
     <div>
-        <div className='grid grid-cols-1 md:grid-cols-2'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
             {/* questions part */}
             <QuestionsSection mockInterviewQuestion={mockInterviewQuestion} activeQuestionIndex={activeQuestionIndex}/>
 
 
             {/* video/audio recording */}
+            <RecordAnsSection/>
 
         </div>
     </div>
