@@ -50,13 +50,15 @@ function RecordAnsSection() {
         <Button variant="outline" className='my-10' onClick={isRecording ? stopSpeechToText : startSpeechToText}>
           {
             isRecording ?
-            <h2>
-              <Mic>'Recording</Mic>
+            <h2 className='text-red-500 flex gap-2'>
+              <Mic>Stop Recording</Mic>
             </h2>
             :
             'Record Answer'
           }
         </Button>
+
+        <Button onClick={()=>console.log(userAnswer)}>Show User Answer</Button>
     </div>
   )
 }
