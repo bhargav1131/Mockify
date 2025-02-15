@@ -18,6 +18,8 @@ function RecordAnsSection() {
       useLegacyResults: false
   });
 
+
+
   console.log("Speech Recognition API initialized:", window.SpeechRecognition || window.webkitSpeechRecognition);
   console.log("Is Recording:", isRecording);
   console.log("Error:", error);
@@ -37,18 +39,16 @@ function RecordAnsSection() {
                 }}
             />
         </div>
-        <Button variant="outline" className='my-10'>Record Answer</Button>
-
-          <h1>Recording: {isRecording.toString()}</h1>
-          <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
-          {isRecording ? 'Stop Recording' : 'Start Recording'}
-          </button>
-          <ul>
-            {results.map((result) => (
-              <li key={result.timestamp}>{result.transcript}</li>
-            ))}
-            {interimResult && <li>{interimResult}</li>}
-          </ul>
+        <Button variant="outline" className='my-10' onClick={isRecording ? stopSpeechToText : startSpeechToText}>
+          {
+            isRecording ?
+            <h2>
+              <Mic>'Recording</Mic>
+            </h2>
+            :
+            'Record Answer'
+          }
+        </Button>
     </div>
   )
 }
