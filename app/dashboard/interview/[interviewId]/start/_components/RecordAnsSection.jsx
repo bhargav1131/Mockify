@@ -6,6 +6,7 @@ import Webcam from 'react-webcam';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button'
 import { Mic } from 'lucide-react';
+import { toast } from "sonner"
 
 function RecordAnsSection() {
   const [userAnswer, setUserAnswer] = useState('');
@@ -28,10 +29,18 @@ function RecordAnsSection() {
     ))
   }, [results])
 
-  console.log("Speech Recognition API initialized:", window.SpeechRecognition || window.webkitSpeechRecognition);
-  console.log("Is Recording:", isRecording);
-  console.log("Error:", error);
-
+  const SaveUserAnswer=()=>{
+    if(isRecording){
+      stopSpeechToText();
+      if(userAnswer?.length <10){
+        toast('Error while saving your answer, Please try again');
+        return;
+      }
+    }
+    else{
+      startSpeechToText();
+    }
+  }
   
   return (
     <div className='flex items-center justify-center flex-col'>
@@ -47,7 +56,7 @@ function RecordAnsSection() {
                 }}
             />
         </div>
-        <Button variant="outline" className='my-10' onClick={isRecording ? stopSpeechToText : startSpeechToText}>
+        <Button variant="outline" className='my-10' onClick={SaveUserAnswer}>
           {
             isRecording ?
             <h2 className='text-red-500 flex gap-2'>
