@@ -1,11 +1,15 @@
 "use client"
+import { useEffect, useState } from 'react';
 import useSpeechToText from 'react-hook-speech-to-text';
 import React from 'react'
 import Webcam from 'react-webcam';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button'
+import { Mic } from 'lucide-react';
 
 function RecordAnsSection() {
+  const [userAnswer, setUserAnswer] = useState('');
+
   const {
       error,
       interimResult,
@@ -18,7 +22,11 @@ function RecordAnsSection() {
       useLegacyResults: false
   });
 
-
+  useEffect(() => {
+    results.map((result) => (
+      setUserAnswer(prevAns => prevAns + result?.transcript),
+    ))
+  }, [results])
 
   console.log("Speech Recognition API initialized:", window.SpeechRecognition || window.webkitSpeechRecognition);
   console.log("Is Recording:", isRecording);
