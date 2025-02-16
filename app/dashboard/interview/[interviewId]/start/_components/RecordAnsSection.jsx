@@ -10,8 +10,11 @@ import { Mic } from 'lucide-react';
 import { StopCircle } from 'lucide-react';
 import { toast } from "sonner"
 import {chatSession} from "@/utils/GeminiAiModal"
+import {db} from "@/utils/db"
+import {UserAnswer} from "@/utils/schema"
+import moment from 'moment';
 
-function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewData) {
+function RecordAnsSection({mockInterviewQuestion,activeQuestionIndex, interviewData}) {
   const [userAnswer, setUserAnswer] = useState('');
   const {user} = useUser();
   const [loading, setLoading] = useState(false);
@@ -34,17 +37,33 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
     ))
   }, [results])
 
-  const SaveUserAnswer=async()=>{
-    if(isRecording){
-      setLoading(true);
-      stopSpeechToText();
-      if(userAnswer?.length <10){
-        setLoading(false);
-        toast('Error while saving your answer, Please try again');
-        return;
-      }
+  useEffect (() => {
+    if(!isRecording && userAnswer.length > 10){
+      UpdateUserAnswer();
+    }
+    // if(userAnswer?.length <10)
+    //   {
+    //     setLoading(false);
+    //     toast('Error while saving your answer, Please try again');
+    //     return;
+    //   }
+  },[userAnswer])
 
-      const feedbackPrompt="Question:"+mockInterviewQuestion[activeQuestionIndex]?.question+","+"User Answer:"+userAnswer+", Depends on question and user answer for given interview question"+"Please give us rating for answer and feedback as area of improvement if any in just 3 to 5 lines to miprove in JSON format with rating field and feedback field";
+  const StartStopRecording=async()=>{
+    if(isRecording){
+      stopSpeechToText();
+    }
+    
+    else{
+      startSpeechToText();
+    }
+  }
+
+  const UpdateUserAnswer = async () => {
+    console.log(userAnswer);
+    console.log("MockId:", interviewData.mockId);
+    setLoading(true);
+    const feedbackPrompt="Question:"+mockInterviewQuestion[activeQuestionIndex]?.question+","+"User Answer:"+userAnswer+", Depends on question and user answer for given interview question"+"Please give us rating for answer and feedback as area of improvement if any in just 3 to 5 lines to miprove in JSON format with rating field and feedback field";
 
       const result = await chatSession.sendMessage(feedbackPrompt);
 
@@ -53,8 +72,9 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
       console.log(mockJsonResp);
       const JsonFeedbackResp = JSON.parse(mockJsonResp);
 
-      const resp = await db.insert(userAnswer).values({
-        mockIdRef: interviewData?.mockId,
+      const resp = await db.insert(UserAnswer).values(
+        {
+        mockIdRef: interviewData.mockId,
         question: mockInterviewQuestion[activeQuestionIndex]?.question,
         correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
         userAns: userAnswer,
@@ -69,11 +89,6 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
       }
       setUserAnswer('');
       setLoading(false);
-    }
-
-    else{
-      startSpeechToText();
-    }
   }
   
   return (
@@ -90,7 +105,7 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
                 }}
             />
         </div>
-        <Button disabled={loading} variant="outline" className='my-10' onClick={SaveUserAnswer}>
+        <Button disabled={loading} variant="outline" className='my-10' onClick={StartStopRecording}>
           {
             isRecording ?
             <h2 className='text-red-500 flex gap-2'>
