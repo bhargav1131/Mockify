@@ -9,8 +9,9 @@ import { Mic } from 'lucide-react';
 import { toast } from "sonner"
 import {chatSession} from "@/utils/GeminiAiModal"
 
-function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex) {
+function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewData) {
   const [userAnswer, setUserAnswer] = useState('');
+  const {user} = useUser();
 
   const {
       error,
@@ -45,7 +46,20 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex) {
       const mockJsonResp=(result.response.text()).replace('```json','').replace('```','');
 
       console.log(mockJsonResp);
+      const JsonFeedbackResp = JSON.parse(mockJsonResp);
+
+      const resp = await db.insert(userAnswer).values({
+        mockIdRef: interviewData?.mockId,
+        question: mockInterviewQuestion[activeQuestionIndex]?.question,
+        correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
+        userAns: userAnswer,
+        feedback: JsonFeedbackResp.feedback,
+        rating: JsonFeedbackResp.rating,
+        userEmail: user?.primaryEmailAddress?.emailAddress,
+        createdAt: moment().format('DD-MM-yyyy')
+      })
     }
+
     else{
       startSpeechToText();
     }
@@ -81,4 +95,4 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex) {
   )
 }
 
-export default RecordAnsSection
+export default RecordAnsSection 
