@@ -1,4 +1,5 @@
 "use client"
+import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import useSpeechToText from 'react-hook-speech-to-text';
 import React from 'react'
@@ -6,12 +7,14 @@ import Webcam from 'react-webcam';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button'
 import { Mic } from 'lucide-react';
+import { StopCircle } from 'lucide-react';
 import { toast } from "sonner"
 import {chatSession} from "@/utils/GeminiAiModal"
 
 function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewData) {
   const [userAnswer, setUserAnswer] = useState('');
   const {user} = useUser();
+  const [loading, setLoading] = useState(false);
 
   const {
       error,
@@ -33,8 +36,10 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
 
   const SaveUserAnswer=async()=>{
     if(isRecording){
+      setLoading(true);
       stopSpeechToText();
       if(userAnswer?.length <10){
+        setLoading(false);
         toast('Error while saving your answer, Please try again');
         return;
       }
@@ -58,6 +63,12 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
         userEmail: user?.primaryEmailAddress?.emailAddress,
         createdAt: moment().format('DD-MM-yyyy')
       })
+
+      if(resp){
+        toast('Your answer has been saved successfully');
+      }
+      setUserAnswer('');
+      setLoading(false);
     }
 
     else{
@@ -79,14 +90,16 @@ function RecordAnsSection(mockInterviewQuestion,activeQuestionIndex, interviewDa
                 }}
             />
         </div>
-        <Button variant="outline" className='my-10' onClick={SaveUserAnswer}>
+        <Button disabled={loading} variant="outline" className='my-10' onClick={SaveUserAnswer}>
           {
             isRecording ?
             <h2 className='text-red-500 flex gap-2'>
-              <Mic>Stop Recording</Mic>
+              <StopCircle/>Stop Recording
             </h2>
             :
-            'Record Answer'
+            <h2 className='text-primary flex gap-2 items-center'>
+              <Mic/>Record Answer
+            </h2>
           }
         </Button>
 
