@@ -42,9 +42,14 @@ function StartInterview({params}) {
         </div>
 
         <div className='flex justify-end gap-5'>
-            {activeQuestionIndex>0 && <Button>Previous Question</Button>}
-            <Button>Next Question</Button>
-            {activeQuestionIndex==mockInterviewQuestion?.length-1 &&<Button>End Interview</Button>}
+            {activeQuestionIndex>0 &&\
+            <Button>Previous Question</Button>}
+
+            {activeQuestionIndex!=mockInterviewQuestion?.length-1 &&
+            <Button>Next Question</Button>}
+            
+            {activeQuestionIndex==mockInterviewQuestion?.length-1 &&
+            <Button>End Interview</Button>}
         </div>
     </div>
   )
