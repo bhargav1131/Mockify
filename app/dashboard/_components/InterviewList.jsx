@@ -4,6 +4,7 @@ import {useUser} from '@clerk/nextjs';
 import {db} from '@/utils/db';
 import {MockInterview} from '@/utils/schema';
 import {desc, eq} from 'drizzle-orm';
+import InterviewItemCard from './InterviewItemCard';
 
 function InterviewList() {
     const {user} = useUser();
@@ -26,6 +27,14 @@ function InterviewList() {
     return (
         <div>
             <h2 className='font-medium text-xl'>Previous Mock Interviews</h2>
+
+            <div>
+                {interviewList&&interviewList.map((interview, index)=>(
+                    <InterviewItemCard 
+                    interview={interview}
+                    key={index}/>
+                ))}
+            </div>
         </div>
     )
 }
