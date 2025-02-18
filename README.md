@@ -27,8 +27,11 @@ Mockify is an AI-powered mock interview platform that helps job seekers practice
 4. **Details for the specific interview:**
 ![alt text](images/interviewDetails.png)
 
-5. **Start**
+5. **Start:**
 ![alt text](images/startInterview.png)
+
+6. **Feedback Page:**
+![alt text](images/feedback.png)
 
 *more to come soon..*
 
