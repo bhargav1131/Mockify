@@ -28,6 +28,12 @@ function feedback({params}) {
     <div className='p-10'>
         <h2 className='text-3xl font-bold text-green-500'>Well Done!</h2>
         <h2 className='font-bold text-2xl'>Here is the feedback for Your Interview</h2>
+
+    {
+        feedbackList?.length==0?
+        <h2 className='text-red-500 font-bold'>No feedback available!</h2>
+        :
+        <>
         <h2 className='text-primary text-lg my-3'>Your overall interview rating: <strong>7/10</strong></h2>
 
         <h2 className='text-sm text-gray-500'>Below are the interview questions along with the correct answers, your responses, and feedback for further improvement.</h2>
@@ -50,7 +56,8 @@ function feedback({params}) {
             </Collapsible>
         ))}
 
-        
+      </>  
+    }
         <Button onClick={()=>router.replace('/dashboard')}>Go Home</Button>
     </div>
   )
