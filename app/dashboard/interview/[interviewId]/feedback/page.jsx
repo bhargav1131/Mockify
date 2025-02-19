@@ -34,7 +34,16 @@ function feedback({params}) {
         <h2 className='text-red-500 font-bold'>No feedback available!</h2>
         :
         <>
-        <h2 className='text-primary text-lg my-3'>Your overall interview rating: <strong>7/10</strong></h2>
+        <h2 className='text-primary text-lg my-3'>Your overall interview rating: 
+            <strong>
+                {
+                    feedbackList.length > 0 ?(
+                        (feedbackList.reduce((acc, curr) => acc + (curr.rating || 0), 0) /
+                        (feedbackList.length*10))*10
+                    ).toFixed(1)
+                    : "N/A"
+                }/10
+            </strong></h2>
 
         <h2 className='text-sm text-gray-500'>Below are the interview questions along with the correct answers, your responses, and feedback for further improvement.</h2>
         {feedbackList&&feedbackList.map((feedback, index)=>(
