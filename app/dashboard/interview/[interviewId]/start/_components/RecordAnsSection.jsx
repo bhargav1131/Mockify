@@ -89,7 +89,7 @@ function RecordAnsSection({mockInterviewQuestion,activeQuestionIndex, interviewD
         toast('Your answer has been saved successfully');
         setUserAnswer('');
         setResults([]);
-      }
+      } 
       setResults([]);
       setLoading(false);
   }
