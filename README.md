@@ -15,7 +15,10 @@ Mockify is an AI-powered mock interview platform that helps job seekers practice
 - **Authentication:** Clerk
 
 ## 📸 Screenshots  
-1. **Landing Page:**
+0. **Landing Page:**
+![alt text](images/home01.png)
+
+1. **Login Page:**
 ![alt text](images/landing.png)
 
 2. **Dashboard:**
