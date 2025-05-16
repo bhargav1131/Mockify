@@ -26,6 +26,7 @@ function StartInterview({params}) {
         setMockInterviewQuestion(jsonMockResp);
         setInterviewData(result[0]);
     }
+    console.log("mockInterviewQuestion:", mockInterviewQuestion);
 
   return (
     <div>
@@ -49,7 +50,7 @@ function StartInterview({params}) {
             {activeQuestionIndex!=mockInterviewQuestion?.length-1 &&
             <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Question</Button>}
 
-            {activeQuestionIndex==mockInterviewQuestion?.length-1 &&
+            {activeQuestionIndex===mockInterviewQuestion?.interviewQuestions?.length-1 &&
             <Link href={'/dashboard/interview/'+interviewData?.mockId+'/feedback'}>
                 <Button>End Interview</Button>
             </Link>}
