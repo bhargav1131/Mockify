@@ -19,7 +19,7 @@ function InterviewList() {
             MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress
         )).orderBy(desc(MockInterview.id));
 
-        console.log(result);
+        // console.log(result);
         setInterviewList(result);
     }
 

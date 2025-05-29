@@ -16,17 +16,16 @@ function StartInterview({params}) {
     useEffect(()=>{
         GetInterviewDetails();
     },[])
-
+    
     // used to get interview details by interview id
     const GetInterviewDetails=async () => {
         const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId));
-
+        
         const jsonMockResp=JSON.parse(result[0].jsonMockResp);
-        console.log(jsonMockResp);
         setMockInterviewQuestion(jsonMockResp);
         setInterviewData(result[0]);
     }
-    console.log("mockInterviewQuestion:", mockInterviewQuestion);
+
 
   return (
     <div>
@@ -50,7 +49,7 @@ function StartInterview({params}) {
             {activeQuestionIndex!=mockInterviewQuestion?.length-1 &&
             <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Question</Button>}
 
-            {activeQuestionIndex===mockInterviewQuestion?.interviewQuestions?.length-1 &&
+            {activeQuestionIndex===mockInterviewQuestion?.length-1 &&
             <Link href={'/dashboard/interview/'+interviewData?.mockId+'/feedback'}>
                 <Button>End Interview</Button>
             </Link>}
