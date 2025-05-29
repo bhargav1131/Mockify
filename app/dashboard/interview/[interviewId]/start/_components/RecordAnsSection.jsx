@@ -37,7 +37,9 @@ function RecordAnsSection({ mockInterviewQuestion, activeQuestionIndex, intervie
   useEffect(() => {
     if (results.length > 0) {
       // Append only the latest transcript part
+      console.log("Speech results: ", results);
       const latestTranscript = results[results.length - 1]?.transcript || "";
+      console.log("Transcript joined: ", latestTranscript);
       setUserAnswer((prevAns) => (prevAns ? prevAns + " " + latestTranscript : latestTranscript));
     }
   }, [results]);
@@ -62,6 +64,7 @@ function RecordAnsSection({ mockInterviewQuestion, activeQuestionIndex, intervie
   const UpdateUserAnswer = async () => {
 
     if (!currentQuestion) {
+      console.log("update user answer..");
       toast.error("No current question to answer.");
       return;
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Lightbulb, Volume2 } from 'lucide-react';
 
 function QuestionsSection({ mockInterviewQuestion, activeQuestionIndex }) {
-
+  const questions = mockInterviewQuestion || [];
   
   const textToSpeech = (text) => {
     if ('speechSynthesis' in window) {
@@ -12,6 +12,9 @@ function QuestionsSection({ mockInterviewQuestion, activeQuestionIndex }) {
       alert('Sorry! Your browser does not support text-to-speech');
     }
   };
+  if (questions.length === 0) {
+    return <p className="text-center text-muted">Loading questions or no questions available.</p>;
+  }
 
   return questions.length > 0 && (
     <div className="p-5 border rounded-lg my-11">
