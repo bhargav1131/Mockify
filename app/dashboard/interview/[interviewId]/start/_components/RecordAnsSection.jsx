@@ -18,7 +18,7 @@ function RecordAnsSection({ mockInterviewQuestion, activeQuestionIndex, intervie
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
 
-  const questions = mockInterviewQuestion || [];
+  const questions = mockInterviewQuestion?.interview_questions || [];
   const currentQuestion = questions[activeQuestionIndex];
 
   const {

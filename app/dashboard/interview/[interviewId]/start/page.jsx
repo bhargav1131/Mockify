@@ -20,8 +20,10 @@ function StartInterview({params}) {
     // used to get interview details by interview id
     const GetInterviewDetails=async () => {
         const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId));
-        
+        console.log("RAW jsonMockResp from DB:", result[0].jsonMockResp);
+
         const jsonMockResp=JSON.parse(result[0].jsonMockResp);
+        console.log("Json: ", jsonMockResp);
         setMockInterviewQuestion(jsonMockResp);
         setInterviewData(result[0]);
     }
@@ -46,10 +48,10 @@ function StartInterview({params}) {
             {activeQuestionIndex>0 &&
             <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex-1)}>Previous Question</Button>}
 
-            {activeQuestionIndex!=mockInterviewQuestion?.length-1 &&
+            {activeQuestionIndex!=mockInterviewQuestion?.interview_questions?.length-1 &&
             <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Question</Button>}
 
-            {activeQuestionIndex===mockInterviewQuestion?.length-1 &&
+            {activeQuestionIndex===mockInterviewQuestion?.interview_questions?.length-1 &&
             <Link href={'/dashboard/interview/'+interviewData?.mockId+'/feedback'}>
                 <Button>End Interview</Button>
             </Link>}
