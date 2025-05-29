@@ -2,8 +2,8 @@ import React from 'react';
 import { Lightbulb, Volume2 } from 'lucide-react';
 
 function QuestionsSection({ mockInterviewQuestion, activeQuestionIndex }) {
-  const questions = mockInterviewQuestion?.interviewQuestions || []; // 👈 Extract array
 
+  
   const textToSpeech = (text) => {
     if ('speechSynthesis' in window) {
       const speech = new SpeechSynthesisUtterance(text);
